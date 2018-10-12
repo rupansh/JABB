@@ -45,7 +45,7 @@ async def build(message: types.Message):
                 await message.reply('seems like {} is already synced!'.format(arglist[0]))
                 romexist = 1
             else:
-                await message.reply('syncing ()'.format(arglist[0]))
+                await message.reply('syncing {}'.format(arglist[0]))
                 os.makedirs(roms[arglist[0]][1])
                 repoinit = subprocess.Popen(['repo', 'init', '-u', roms[arglist[0]][0][0], '-b', roms[arglist[0]][0][1]], cwd=roms[arglist[0]][1])
                 repoinit.wait()
@@ -75,7 +75,7 @@ async def build(message: types.Message):
         if devicecl:
             if roms[arglist[0]][2] == 1:
                 await message.reply('seems like the rom has brunch! using eet')
-                copyfile('/root/kektreasure/bleedbot/builder.sh', roms[arglist[0]][1]+'/builder.sh')
+                copyfile('builder.sh', roms[arglist[0]][1]+'/builder.sh')
                 if os.path.isfile('{}/log.txt'.format(roms[arglist[0]][1])):
                     os.remove('{}/log.txt'.format(roms[arglist[0]][1]))
                 if arglist[3] and arglist[3] == 'clean':
