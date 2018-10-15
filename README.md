@@ -24,7 +24,7 @@ GitPython
  construct a **dictionary** with key : value as follows -  
 
      {'romname' : (('manifest url', 'manifest branch'), 'location to sync to from /', 1)}
-   **important note**- don't add / to the ending of the path of the ROM!
+   **important note**- don't add / to the ending of the path of the ROM!, the romname should be what u use with brunch (i.e brunch lineage_devicename. If i were to add lineage, i would keep romname as lineage!)
    
   *(ps. The quotes are important since the values have to be string type so are the parenthesis)*
 
