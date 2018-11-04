@@ -3,7 +3,7 @@ Just Another Buildbot
 
 **Usage** :- 
 
-    python3.6 build.py
+    python3.7 build.py
 
 **Requirements** :-
 
@@ -13,7 +13,7 @@ GitPython
 
 # **How to configure** :
 
- - Install **python3.6** (3.5 , the default shipped with ubuntu won't work!)
+ - Install **python3.7** (3.5 , the default shipped with ubuntu won't work!)
  - Install **gdrive** (here's a nice tutorial -  https://olivermarshall.net/how-to-upload-a-file-to-google-drive-from-the-command-line/ )
  - Install all the required dependencies for building a rom
  - Install the requirements using pip(or use the **requirements.txt**)
