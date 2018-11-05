@@ -76,30 +76,46 @@ async def build(message: types.Message):
             if roms[arglist[0]][2] == 1:
                 await message.reply('seems like the rom has brunch! using eet')
                 copyfile('builder.sh', roms[arglist[0]][1]+'/builder.sh')
-                if os.path.isfile('{}/log.txt'.format(roms[arglist[0]][1])):
-                    os.remove('{}/log.txt'.format(roms[arglist[0]][1]))
-                if arglist[3] and arglist[3] == 'clean':
+                if len(arglist) == 4 and arglist[3] == 'clean':
                     compile = subprocess.Popen(['/bin/bash', 'builder.sh', arglist[0]+'_'+arglist[1]+'-'+arglist[2], 'clean'], cwd=roms[arglist[0]][1])
                 else:
                     compile = subprocess.Popen(['/bin/bash', 'builder.sh', arglist[0]+'_'+arglist[1]+'-'+arglist[2]], cwd=roms[arglist[0]][1])
-                compile.wait()
-                try:
-                    # to do - make this statement more secure (see drawbacks of shell=True on google)
-                    romzip = subprocess.check_output('ls out/target/product/'+arglist[1]+'/'+arglist[0]+'*'+'-'+arglist[1], cwd=roms[arglist[0]][1], shell=True)
-                except subprocess.CalledProcessError:
-                    romzip = 'arbitiaryfile.lmfaoxdd'
-                if os.path.isfile(romzip):
-                    # to do - process the gdrive output and send the link, replace os.system with subprocess
-                    os.system('gdrive upload {}/out/target/product/{}/{}'.format(roms[arglist[0]][1], arglist[1], romzip))
-                    await message.reply('uploaded to gdrive! check your drive')
-                else:
-                    # to do - process the gdrive output and send the link, replace os.system with subprocess
-                    os.chdir(roms[arglist[0]][1])
-                    os.system('gdrive upload {}'.format(roms[arglist[0]][1]+'/log.txt'))
-                    await message.reply('got error! log uploaded to gdrive! check eet')
             elif roms[arglist[0]][2] != 1:
-                # to do - implement support for roms that don't use brunch
-                await message.reply('Non brunch ROMs not supported yet')
+                await message.reply('using custom command!')
+                copyfile('builder.sh', 'builder1.sh')
+                with open("builder1.sh", "r") as initshell:
+                    buf = initshell.readlines()
+
+                with open("builder1.sh", "w") as finalshell:
+                    for line in buf:
+                        if line == "#!/bin/bash\n":
+                            line = line + "jabbcmd={}\n".format(roms[arglist[0]][2])
+                        finalshell.write(line)
+                copyfile('builder1.sh', roms[arglist[0]][1]+'/builder.sh')
+                if len(arglist) == 4 and arglist[3] == 'clean':
+                    compile = subprocess.Popen(['/bin/bash', 'builder.sh', arglist[0]+'_'+arglist[1]+'-'+arglist[2], 'custom', 'clean'], cwd=roms[arglist[0]][1])
+                else:
+                    compile = subprocess.Popen(['/bin/bash', 'builder.sh', arglist[0]+'_'+arglist[1]+'-'+arglist[2], 'custom'], cwd=roms[arglist[0]][1])
+
+            if os.path.isfile('{}/log.txt'.format(roms[arglist[0]][1])):
+                os.remove('{}/log.txt'.format(roms[arglist[0]][1]))
+
+            compile.wait()
+            try:
+                # to do - make this statement more secure (see drawbacks\of shell=True on google)
+                romzip = subprocess.check_output('ls out/target/product/'+arglist[1]+'/'+arglist[0]+'*'+'-'+arglist[1], cwd=roms[arglist[0]][1], shell=True)
+            except subprocess.CalledProcessError:
+                romzip = 'arbitiaryfile.lmfaoxdd'
+            if os.path.isfile(romzip):
+                # to do - process the gdrive output and send the link, replace os.system with subprocess
+                os.system('gdrive upload {}/out/target/product/{}/{}'.format(roms[arglist[0]][1], arglist[1], romzip))
+                await message.reply('uploaded to gdrive! check your drive')
+            else:
+                # to do - process the gdrive output and send the link, replace os.system with subprocess
+                os.chdir(roms[arglist[0]][1])
+                os.system('gdrive upload {}'.format(roms[arglist[0]][1]+'/log.txt'))
+                await message.reply('got error! log uploaded to gdrive! check eet. If it says completed, then navigate to rom dir manualy and upload')
+
     else:
         await message.reply('bish you are not in the allowed list')
 
