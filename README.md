@@ -19,7 +19,7 @@ GitPython
  - Install the requirements using pip(or use the **requirements.txt**)
  - Put your bot token in the **TOKEN** variable inside quotes
 
-***To add support for a rom(Make sure it supports brunch) :-***
+***To add support for a rom :-***
 
  construct a **dictionary** with key : value as follows -  
 
@@ -27,6 +27,11 @@ GitPython
    **important note**- don't add / to the ending of the path of the ROM!, the romname should be what u use with brunch (i.e brunch lineage_devicename. If i were to add lineage, i would keep romname as lineage!)
    
   *(ps. The quotes are important since the values have to be string type so are the parenthesis)*
+
+  *(if the rom uses something other than brunch, put the command in place of the 1 inside double quotes. for example, the dictionary for carbon rom would look like -*
+
+     carbon = {'carbon': (("https://github.com/CarbonROM/android.git", "cr-6.1"), '/home/build/carbon', 'make carbon -j8')}
+)
 
  put this in any arbitrary variable(say xyz) (see variable assignment if you don't know how to on google)
 
