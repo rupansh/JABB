@@ -89,7 +89,7 @@ async def build(message: types.Message):
                 with open("builder1.sh", "w") as finalshell:
                     for line in buf:
                         if line == "#!/bin/bash\n":
-                            line = line + "jabbcmd={}\n".format(roms[arglist[0]][2])
+                            line = line + "jabbcmd='{}'\n".format(roms[arglist[0]][2])
                         finalshell.write(line)
                 copyfile('builder1.sh', roms[arglist[0]][1]+'/builder.sh')
                 if len(arglist) == 4 and arglist[3] == 'clean':
